@@ -1,5 +1,6 @@
 // distance.cpp
 #include <cmath>
+#include <iostream>
 
 const float radius = 3959.9;
 
@@ -10,13 +11,23 @@ float DegreeToRadians(float n)
     return s;
 }
 
-float DistanceOfTwoLocations(float lon1, float lat1, float lon2, float lat2)
+float DistanceOfTwoLocations(float lat1, float lon1, float lat2, float lon2)
 {
 
-    float dlon, dlat, a, c, d;
-    dlon = lon2 - lon1;
-    dlat = lat2 - lat1;
-    a = std::pow(std::sin(dlat/2),2) +  std::cos(lat1) * std::cos(lat2) *  std::pow(std::sin(dlon/2),2);
+    float a, c, d;
+    float phi1, phi2, dphi, dlam;
+    phi1 = lat1 * (M_PI/180);
+    std::cout << phi1 << std::endl;
+    phi2 = lat2 * (M_PI/180);
+    std::cout << phi2 << std::endl;
+    dphi = phi2 - phi1;
+    std::cout << dphi << std::endl;
+    dlam = (lon2-lon1) * (M_PI/180);
+    std::cout << dlam << std::endl;
+
+    a = std::sin(dphi/2) * std::sin(dphi/2) + 
+        std::cos(phi1) * std::cos(phi2) *
+        std::sin(dlam/2) * std::sin(dlam/2);
     c = 2 * std::atan2(std::sqrt(a),std::sqrt(1-a));
     d = radius * c;
     return d;
