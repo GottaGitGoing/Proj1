@@ -1,5 +1,6 @@
 #include "distance.hpp"
 #include <iostream>
+#include "starter.hpp"
 
 
 /*
@@ -27,8 +28,8 @@ int main()
     // c = DegreeToRadians(20.8987);
     // d = DegreeToRadians(156.4305);
 
-    std::cout << DistanceOfTwoLocations(33.9425,118.4081,-23.4356,46.4731) <<std::endl;
-
+    // std::cout << DistanceOfTwoLocations(0,0,0,0) <<std::endl;
+    StartLoop();
 
     return 0;
 }
