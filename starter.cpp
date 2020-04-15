@@ -1,6 +1,7 @@
 // start.cpp
 #include "input.hpp"
 #include "distance.hpp"
+#include "name_creator.hpp"
 #include <iostream>
 
 
@@ -21,32 +22,27 @@ int StartLoop()
     {
         start_lon *=-1;
     }
-    // double start_lat,start_lon;
+    
     int target;
-    // std::string start_NS, start_EW, start_name;
-    // start_lat = GetLat();
-    // start_NS = GetNS();
-    // start_lon = GetLon();
-    // start_EW = GetEW();
-    // start_name = GetName();
-    // target = GetTarget();
-    // std::cout << start_lat << " ok be good " << start_NS << start_lon 
-    //           << start_EW << start_name <<std::endl;
-    // std::cout << target <<std::endl;
-
+    
+    
+    // std::cout << CreateLocName(start_lat, start_ns, start_lon, start_ew, start_name) << std::endl;
 
     int i=0;
     float distance;
     float min,max;
     min = max = 0;
     std::cin >> target;
+    std::cin.ignore(1);
+    // std::cout << target << std::endl;
     float dest_lat, dest_lon;
     std::string dest_ns,dest_ew,dest_name;
-    
+    std::string min_name, max_name;
     while (target != 0)
     {
         std::cin >> dest_lat >> dest_ns >> dest_lon >> dest_ew;
         std::getline(std::cin,dest_name);
+        // std::cout << CreateLocName(dest_lat,dest_ns,dest_lon, dest_ew,dest_name) <<std::endl;
         if (dest_ns == "/S" )
         {
             dest_lat *= -1;
@@ -55,11 +51,6 @@ int StartLoop()
         {
             dest_lon *=-1;
         }
-    //     dest_lat = GetLat();
-    //     dest_NS =  GetNS();
-    //     dest_lon = GetLon();
-    //     dest_EW = GetEW();
-    //     dest_name = GetName();
                 
         distance = DistanceOfTwoLocations(start_lat,start_lon,dest_lat,dest_lon);
         if (distance >= max)
@@ -67,14 +58,22 @@ int StartLoop()
             if (i==0) 
             {
                 min = max = distance;
+                min_name = max_name = CreateLocName(dest_lat,dest_ns,dest_lon,dest_ew,dest_name);
                 i++;
             }
             else
             {
                 max = distance;
+                max_name = CreateLocName(dest_lat,dest_ns,dest_lon,dest_ew,dest_name);
             }
         }
-        std::cout << distance << std::endl;
+        else
+        {
+            min = distance;
+            min_name = CreateLocName(dest_lat,dest_ns,dest_lon,dest_ew,dest_name);
+        }
+        
+        // std::cout << distance << std::endl;
         target--; 
     }
 
