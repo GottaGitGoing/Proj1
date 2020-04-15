@@ -5,6 +5,7 @@
 #include <iostream>
 
 
+
 int StartLoop()
 {
     float start_lat;
@@ -13,6 +14,7 @@ int StartLoop()
     std::string start_ew;
     std::string start_name;
     std::cin >> start_lat >> start_ns >> start_lon >> start_ew;
+    std::cin.ignore(1); // just added ------------------------------------------
     std::getline(std::cin,start_name);
     if (start_ns == "/S" )
     {
@@ -41,15 +43,17 @@ int StartLoop()
     while (target != 0)
     {
         std::cin >> dest_lat >> dest_ns >> dest_lon >> dest_ew;
+        std::cin.ignore(1); // Just added ----------------------------------
         std::getline(std::cin,dest_name);
+
         // std::cout << CreateLocName(dest_lat,dest_ns,dest_lon, dest_ew,dest_name) <<std::endl;
         if (dest_ns == "/S" )
         {
-            dest_lat *= -1;
+            dest_lat *= -1.0;
         }
         if (dest_ew == "/E")
         {
-            dest_lon *=-1;
+            dest_lon *=-1.0;
         }
                 
         distance = DistanceOfTwoLocations(start_lat,start_lon,dest_lat,dest_lon);
@@ -78,6 +82,9 @@ int StartLoop()
     }
 
 
+    // std::cout << "Start Location: " << start_lat << start_ns << " " << "(" << start_name << ")" << std::endl;
+    std::string start_full = CreateLocName(start_lat,start_ns, start_lon,start_ew,start_name);
+    CreateOutputResult(start_full,min_name,max_name,min,max);
 
     return 0;
 }
